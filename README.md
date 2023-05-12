@@ -1,2 +1,9 @@
-# FP_Kecerdasan_Buatan_D06
-Kami dari kelas Kecerdasan Buatan D Kelompok 6 akan mengimplementasikan algoritma-algoritma yang telah diajarkan pada Final Project ETS kali ini
+## Group Introduction
+
+<b>Kelompok 06 Kecerdasan Buatan D</b> :
+| Nama | NRP |
+|---------------------------|------------|
+|Calvin Janitra | 5025211020 |
+|Kevin Nathanael Halim | 5025211140 |
+|M. Zhafran Dzaky | 5025211142 |
+|M. Naufal Badruttamam | 5025211240 |
