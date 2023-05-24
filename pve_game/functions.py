@@ -125,12 +125,13 @@ def scorePos(board, piece):
             window = col_array[r : r + WINDOW_LEN]
             score += evalWindow(window, piece)
 
-    ## Score posiive sloped diagonal
+    ## Score positive sloped diagonal
     for r in range(ROW - 3):
         for c in range(COL - 3):
             window = [board[r + i][c + i] for i in range(WINDOW_LEN)]
             score += evalWindow(window, piece)
 
+    ## Score negative sloped diagonal
     for r in range(ROW - 3):
         for c in range(COL - 3):
             window = [board[r + 3 - i][c + i] for i in range(WINDOW_LEN)]

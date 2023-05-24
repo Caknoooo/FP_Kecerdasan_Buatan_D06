@@ -97,7 +97,7 @@ loadingRect = loadingText.get_rect(center=(WIDTH / 2, HEIGHT / 2))
 screen.blit(loadingText, loadingRect)
 pygame.display.flip()
 
-gifReader = imageio.get_reader("background.gif")
+gifReader = imageio.get_reader("../background.gif")
 
 gifSurfaces = []
 for frame in gifReader:
