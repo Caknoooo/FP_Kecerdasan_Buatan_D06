@@ -69,3 +69,7 @@ def winning_move(board, piece):
                 and board[r - 3][c + 3] == piece
             ):
                 return True
+
+
+def isTied(board):
+    return not 0 in board[ROW - 1]

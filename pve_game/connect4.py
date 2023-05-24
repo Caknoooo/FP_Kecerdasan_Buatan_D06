@@ -11,6 +11,7 @@ from functions import (
     getNextOpenRow,
     printBoard,
     winMove,
+    isTied,
     minimax,
     isInRect,
 )
@@ -105,7 +106,7 @@ for frame in gifReader:
     gifSurface = pygame.transform.scale(gifSurface, SIZE)
     gifSurfaces.append(gifSurface)
 
-levelOpts = [1, 2, 3, 4, 5]
+levelOpts = [1, 2, 3, 4, 5, 6]
 chosenLevel = levelOpts[0]
 
 menu_running = True
@@ -181,47 +182,58 @@ while not game_over:
         pygame.display.update()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
-            pygame.draw.rect(screen, WHITE, (0, 0, WIDTH, SQUARESIZE))
-
             # Player 1
             if turn == PLAYER:
                 posx = event.pos[0]
                 col = int(math.floor(posx / SQUARESIZE))
 
-                if isValidLoc(board, col):
-                    row = getNextOpenRow(board, col)
-                    dropPiece(board, row, col, PLAYER_PIECE)
+                if not isValidLoc(board, col):
+                    continue
 
-                    if winMove(board, PLAYER_PIECE):
-                        label = gameFont.render("Player Red wins!", 1, RED)
-                        screen.blit(label, (140, 30))
-                        game_over = True
+                pygame.draw.rect(screen, WHITE, (0, 0, WIDTH, SQUARESIZE))
+                row = getNextOpenRow(board, col)
+                dropPiece(board, row, col, PLAYER_PIECE)
 
-                    turn += 1
-                    turn = turn % 2
+                if winMove(board, PLAYER_PIECE):
+                    label = gameFont.render("Player Red wins!", 1, RED)
+                    screen.blit(label, (140, 30))
+                    game_over = True
+                elif isTied(board):
+                    label = gameFont.render("Game Tied!", 1, BLUE)
+                    screen.blit(label, (210, 30))
+                    game_over = True
 
-                    printBoard(board)
-                    render_board(board)
+                turn += 1
+                turn = turn % 2
 
+                printBoard(board)
+                render_board(board)
     # AI
     if turn == AI and not game_over:
         col, minimax_score = minimax(board, chosenLevel, -math.inf, math.inf, True)
-        time.sleep(0.8 - (0.2 * (chosenLevel - 1)))
+        if chosenLevel <= 5:
+            time.sleep(0.8 - (0.2 * (chosenLevel - 1)))
 
-        if isValidLoc(board, col):
-            row = getNextOpenRow(board, col)
-            dropPiece(board, row, col, AI_PIECE)
+        if not isValidLoc(board, col):
+            continue
 
-            if winMove(board, AI_PIECE):
-                label = gameFont.render("Player Yellow wins!", 1, YELLOW)
-                screen.blit(label, (110, 30))
-                game_over = True
+        row = getNextOpenRow(board, col)
+        dropPiece(board, row, col, AI_PIECE)
 
-            printBoard(board)
-            render_board(board)
+        if winMove(board, AI_PIECE):
+            label = gameFont.render("Player Yellow wins!", 1, YELLOW)
+            screen.blit(label, (110, 30))
+            game_over = True
+        elif isTied(board):
+            label = gameFont.render("Game Tied!", 1, BLUE)
+            screen.blit(label, (210, 30))
+            game_over = True
 
-            turn += 1
-            turn = turn % 2
+        printBoard(board)
+        render_board(board)
+
+        turn += 1
+        turn = turn % 2
 
     if game_over:
         pygame.time.wait(3000)

@@ -8,6 +8,7 @@ from functions import (
     get_next_open_row,
     print_board,
     winning_move,
+    isTied,
 )
 from constants import (
     ROW,
@@ -110,6 +111,10 @@ while not game_over:
                         label = myfont.render("Player Red wins!", 1, RED)
                         screen.blit(label, (140, 30))
                         game_over = True
+                    elif isTied(board):
+                        label = myfont.render("Game Tied!", 1, BLUE)
+                        screen.blit(label, (210, 30))
+                        game_over = True
 
             # Player 2
             else:
@@ -123,6 +128,10 @@ while not game_over:
                     if winning_move(board, 2):
                         label = myfont.render("Player Yellow wins!", 1, YELLOW)
                         screen.blit(label, (110, 30))
+                        game_over = True
+                    elif isTied(board):
+                        label = myfont.render("Game Tied!", 1, BLUE)
+                        screen.blit(label, (210, 30))
                         game_over = True
 
             print_board(board)

@@ -80,6 +80,10 @@ def winMove(board, piece):
                 return True
 
 
+def isTied(board):
+    return not 0 in board[ROW - 1]
+
+
 def evalWindow(window, piece):
     score = 0
     opp_piece = PLAYER_PIECE
@@ -190,6 +194,7 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
             b_copy = board.copy()
             dropPiece(b_copy, row, col, AI_PIECE)
             new_score = minimax(b_copy, depth - 1, alpha, beta, False)[1]
+            # print(f"Max (Depth {depth}, Alpha {alpha}, Beta {beta}) : {new_score}")
             if new_score > value:
                 value = new_score
                 column = col
@@ -206,6 +211,7 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
             b_copy = board.copy()
             dropPiece(b_copy, row, col, PLAYER_PIECE)
             new_score = minimax(b_copy, depth - 1, alpha, beta, True)[1]
+            # print(f"Min (Depth {depth}, Alpha {alpha}, Beta {beta}) : {new_score}")
             if new_score < value:
                 value = new_score
                 column = col
